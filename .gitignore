@@ -1,5 +1,24 @@
+# Entornos y claves
 .env
-.cache_ia/
+.env.*
+!.env.example
+
+# Python
 __pycache__/
-.venv/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
 venv/
+.venv/
+
+# Caché y temporales
+.cache_ia/
+.pytest_cache/
+*.tmp
+*.log
+
+# Archivos de datos pesados (opcional para no saturar el repo con Excels de proveedores)
+*.xlsx
+*.ods

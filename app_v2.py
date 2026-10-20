@@ -441,7 +441,9 @@ UMBRAL_MAX_NULOS = 0.15  # Si más del 15% de datos son nulos, se considera form
 def main():
     st.title("📺 EPG Formatter v2")
     st.caption(
-        "Transforma archivos EPG de proveedores al formato del EPG Uploader"
+        "Transforma archivos EPG de proveedores al formato del "
+        "[EPG Uploader](http://198.71.56.147:8080/epgtool) | "
+        "[EPG Manager Canales](http://cdn.oneplaychile.cl:60001/manager/channels)"
     )
 
     # ── Inicializar session_state ──
@@ -457,6 +459,23 @@ def main():
     # SIDEBAR
     # ══════════════════════════════════════════════════════════
     with st.sidebar:
+        st.subheader("🔗 Enlaces Rápidos NOC")
+        col_l1, col_l2 = st.columns(2)
+        with col_l1:
+            st.link_button(
+                "📤 Uploader",
+                "http://198.71.56.147:8080/epgtool",
+                use_container_width=True,
+                help="Subir el Excel generado al EPG Uploader Tool",
+            )
+        with col_l2:
+            st.link_button(
+                "📺 Canales",
+                "http://cdn.oneplaychile.cl:60001/manager/channels",
+                use_container_width=True,
+                help="Ver listado de canales en EPG Manager",
+            )
+        st.divider()
         st.header("📂 Archivo")
         archivo = st.file_uploader(
             "Sube el Excel del proveedor",
@@ -533,6 +552,7 @@ def main():
             "Debe coincidir con el nombre en el EPG Manager. "
             "Máx 31 caracteres, sin : \\ / ? * [ ]",
         )
+        st.caption("🔍 Consulta el listado oficial en [EPG Manager Canales](http://cdn.oneplaychile.cl:60001/manager/channels)")
 
         # Timezone
         tz = st.number_input(
@@ -892,14 +912,30 @@ def main():
             excel_bytes = generar_excel(df_editado, canal_out)
             nombre_archivo = f"{canal_out.strip().replace(' ', '_')}_EPG.xlsx"
 
-            st.download_button(
-                label=f"📥 Descargar {nombre_archivo}",
-                data=excel_bytes,
-                file_name=nombre_archivo,
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                type="primary",
-                use_container_width=True,
-            )
+            col_down, col_up, col_mgr = st.columns([2, 1, 1])
+            with col_down:
+                st.download_button(
+                    label=f"📥 Descargar {nombre_archivo}",
+                    data=excel_bytes,
+                    file_name=nombre_archivo,
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    type="primary",
+                    use_container_width=True,
+                )
+            with col_up:
+                st.link_button(
+                    label="📤 EPG Uploader",
+                    url="http://198.71.56.147:8080/epgtool",
+                    use_container_width=True,
+                    help="Abre el EPG Uploader para subir el archivo descargado",
+                )
+            with col_mgr:
+                st.link_button(
+                    label="📺 EPG Manager",
+                    url="http://cdn.oneplaychile.cl:60001/manager/channels",
+                    use_container_width=True,
+                    help="Ver listado de canales y programación en EPG Manager",
+                )
 
         # Avisos
         if avisos:
