@@ -47,7 +47,7 @@ from excel_preprocessing import expandir_celdas_combinadas, obtener_hojas
 # CONFIGURACIÓN DE PÁGINA
 # ══════════════════════════════════════════════════════════════
 st.set_page_config(
-    page_title="📺 EPG Formatter v2",
+    page_title="📺 EPG Formatter — Operaciones NOC",
     page_icon="📺",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -439,7 +439,7 @@ UMBRAL_MAX_NULOS = 0.15  # Si más del 15% de datos son nulos, se considera form
 
 
 def main():
-    st.title("📺 EPG Formatter v2")
+    st.title("📺 EPG Formatter — Operaciones NOC")
     st.caption(
         "Transforma archivos EPG de proveedores al formato del "
         "[EPG Uploader](http://198.71.56.147:8080/epgtool) | "
@@ -518,12 +518,19 @@ def main():
                 "📆 Bloque (Sin Fechas)",
                 "✋ Manual",
             ],
+            captions=[
+                "Detección inteligente recomendada",
+                "Suyai, Cine Premium, Nexxor TV, Bantel, STV / CBL",
+                "Canal LUZ, teleSUR, Aliento Visión",
+                "Canal Antena 1",
+                "Formatos personalizados o no estándar",
+            ],
             index=0,
             help=(
                 "**Auto**: detecta el formato automáticamente (Lineal o Matricial).\n\n"
-                "**Lineal**: cada fila es un programa (Suyai, Cine Premium, Nexxor).\n\n"
-                "**Matricial**: días como columnas (Canal LUZ).\n\n"
-                "**Bloque**: horarios sin columna de fecha (ej. Antena 1).\n\n"
+                "**Lineal**: cada fila es un programa (Suyai, Cine Premium, Nexxor, Bantel, STV).\n\n"
+                "**Matricial**: días como columnas (Canal LUZ, teleSUR, Aliento Visión).\n\n"
+                "**Bloque**: horarios sin columna de fecha (Antena 1).\n\n"
                 "**Manual**: tú eliges qué columnas usar."
             ),
         )
